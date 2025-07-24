@@ -1,0 +1,31 @@
+2025-07-01 23:18:48,585 [INFO] Found credentials in shared credentials file: ~/.aws/credentials
+2025-07-01 23:18:48,816 [INFO] Starting Flask app...
+2025-07-01 23:18:48,848 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-01 23:18:48,848 [INFO] [33mPress CTRL+C to quit[0m
+2025-07-01 23:18:48,868 [INFO]  * Restarting with watchdog (windowsapi)
+2025-07-01 23:18:49,290 [INFO] Found credentials in shared credentials file: ~/.aws/credentials
+2025-07-01 23:18:49,506 [INFO] Starting Flask app...
+2025-07-01 23:18:49,522 [WARNING]  * Debugger is active!
+2025-07-01 23:18:49,525 [INFO]  * Debugger PIN: 905-803-413
+2025-07-01 23:19:08,742 [INFO] Fetching login logs from DynamoDB
+2025-07-01 23:19:09,473 [INFO] Returned 18 log entries
+2025-07-01 23:19:09,473 [INFO] 127.0.0.1 - - [01/Jul/2025 23:19:09] "GET /api/logs HTTP/1.1" 200 -
+2025-07-01 23:19:09,473 [INFO] Fetching login logs from DynamoDB
+2025-07-01 23:19:09,706 [INFO] Returned 18 log entries
+2025-07-01 23:19:09,706 [INFO] 127.0.0.1 - - [01/Jul/2025 23:19:09] "GET /api/logs HTTP/1.1" 200 -
+2025-07-01 23:19:19,958 [INFO] Registering user: ravikumar
+2025-07-01 23:19:19,960 [INFO] Saved image to static/uploads\ravikumar_register.jpg
+2025-07-01 23:19:21,446 [INFO] Uploaded image to S3 bucket: my-face-image-recognition, filename: ravikumar_register.jpg
+2025-07-01 23:19:22,561 [INFO] Face indexed in Rekognition collection: my-rekognition-collection
+2025-07-01 23:19:22,797 [INFO] 127.0.0.1 - - [01/Jul/2025 23:19:22] "[35m[1mPOST /api/register HTTP/1.1[0m" 500 -
+2025-07-01 23:19:30,869 [INFO] Registering user: ravikumar
+2025-07-01 23:19:30,872 [INFO] Saved image to static/uploads\ravikumar_register.jpg
+2025-07-01 23:19:32,178 [INFO] Uploaded image to S3 bucket: my-face-image-recognition, filename: ravikumar_register.jpg
+2025-07-01 23:19:32,581 [INFO] Face indexed in Rekognition collection: my-rekognition-collection
+2025-07-01 23:19:32,813 [INFO] 127.0.0.1 - - [01/Jul/2025 23:19:32] "[35m[1mPOST /api/register HTTP/1.1[0m" 500 -
+2025-07-01 23:19:55,530 [INFO]  * Detected change in 'C:\\Users\\banu5\\Desktop\\Ravi\\Final year project\\Falkeen\\face-auth-frontend\\face-auth-frontend\\backend\\app.py', reloading
+2025-07-01 23:19:55,530 [INFO]  * Detected change in 'C:\\Users\\banu5\\Desktop\\Ravi\\Final year project\\Falkeen\\face-auth-frontend\\face-auth-frontend\\backend\\app.py', reloading
+2025-07-01 23:19:55,533 [INFO]  * Detected change in 'C:\\Users\\banu5\\Desktop\\Ravi\\Final year project\\Falkeen\\face-auth-frontend\\face-auth-frontend\\backend\\app.py', reloading
+2025-07-01 23:19:55,533 [INFO]  * Detected change in 'C:\\Users\\banu5\\Desktop\\Ravi\\Final year project\\Falkeen\\face-auth-frontend\\face-auth-frontend\\backend\\app.py', reloading
+2025-07-01 23:19:56,151 [INFO]  * Restarting with watchdog (windowsapi)
