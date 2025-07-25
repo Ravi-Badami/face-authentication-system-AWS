@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, useAnimation } from 'framer-motion';
+import Button from '../components/Button/Button.jsx';
 
 const colors = {
   primary: '#4A247D',
@@ -165,47 +166,37 @@ export default function HomePage() {
               {/* User Card */}
               <motion.div
                 ref={(el) => (cardRefs.current[0] = el)}
-                className="tilt-card bg-white/25 backdrop-blur-lg rounded-3xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border border-white/30"
+                className="tilt-card bg-white/25 backdrop-blur-lg rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border border-white/30"
                 style={{
-                  boxShadow: '0 15px 30px -8px rgba(0, 0, 0, 0.5), 0 6px 12px -3px rgba(0, 0, 0, 0.3)',
+                  boxShadow: '0 10px 20px -6px rgba(0, 0, 0, 0.4), 0 4px 8px -2px rgba(0, 0, 0, 0.2)',
                 }}
                 onClick={() => handleRoleClick('user')}
               >
-                <h2 className="text-3xl font-bold text-accent1 mb-3 glitch-on-hover">
+                <h2 className="text-2xl font-bold text-accent1 mb-2 glitch-on-hover">
                   <span className="glitch-text">User Access</span>
                 </h2>
-                <p className="text-black font-bold text-lg text-md mb-6">
-                  Securely log in and manage your personal profile using advanced facial recognition.
+                <p className="text-black font-semibold text-base mb-4">
+                  Securely log in and manage your profile using facial recognition.
                 </p>
-                <button
-                  id="user-button"
-                  className="bg-primary hover:brightness-125 text-black px-8 py-3 rounded-full transition-all duration-300 shadow-lg text-lg font-semibold transform hover:translate-y-[-2px] active:translate-y-[0px] focus:outline-none focus:ring-4 focus:ring-primary focus:ring-opacity-50"
-                >
-                  Enter as User
-                </button>
+                <Button text="User" className="px-5 py-2 rounded-full text-base font-semibold"></Button>
               </motion.div>
 
               {/* Admin Card */}
               <motion.div
                 ref={(el) => (cardRefs.current[1] = el)}
-                className="tilt-card bg-white/25 backdrop-blur-lg rounded-3xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border border-white/30"
+                className="tilt-card bg-white/25 backdrop-blur-lg rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border border-white/30"
                 style={{
-                  boxShadow: '0 15px 30px -8px rgba(0, 0, 0, 0.5), 0 6px 12px -3px rgba(0, 0, 0, 0.3)',
+                  boxShadow: '0 10px 20px -6px rgba(0, 0, 0, 0.4), 0 4px 8px -2px rgba(0, 0, 0, 0.2)',
                 }}
                 onClick={() => handleRoleClick('admin')}
               >
-                <h2 className="text-3xl font-bold text-accent2 mb-3 glitch-on-hover">
+                <h2 className="text-2xl font-bold text-accent2 mb-2 glitch-on-hover">
                   <span className="glitch-text">Admin Dashboard</span>
                 </h2>
-                <p className="text-black text-lg text-md mb-6">
-                  Access administrative controls to manage users and system settings with elevated privileges.
+                <p className="text-black font-semibold text-base mb-4">
+                  Manage users and system settings with elevated privileges.
                 </p>
-                <button
-                  id="admin-button"
-                  className="bg-secondary hover:brightness-125 text-black px-8 py-3 rounded-full transition-all duration-300 shadow-lg text-lg font-semibold transform hover:translate-y-[-2px] active:translate-y-[0px] focus:outline-none focus:ring-4 focus:ring-secondary focus:ring-opacity-50"
-                >
-                  Enter as Admin
-                </button>
+                <Button text="Admin" className="px-5 py-2 rounded-full text-base font-semibold"></Button>
               </motion.div>
             </div>
           </motion.div>
