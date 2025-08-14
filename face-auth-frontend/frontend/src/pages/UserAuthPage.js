@@ -23,22 +23,16 @@ const colors = {
 // Custom CSS styles for animations and global typography
 const customStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+  /* Apply a default background to the body */
   body {
-    font-family: 'Inter', sans-serif; /* Apply Inter font globally */
-  }
-
-  /* Keyframes for the cosmic gradient background animation */
-  @keyframes cosmicGradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  /* Apply the cosmic gradient background with animation */
-  .cosmic-gradient-bg {
-    background: linear-gradient(-45deg, ${colors.primary}, ${colors.secondary}, ${colors.accent1}, ${colors.accent2});
-    background-size: 400% 400%; /* Make the gradient larger than the viewport for movement */
-    animation: cosmicGradient 15s ease infinite; /* Smooth, infinite animation */
+    font-family: 'Inter', sans-serif;
+    background: #00b4ff; /* A blue background to complement the clouds */
+    color: #333;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
   }
 
   /* Keyframes for the glitch effect on text */
@@ -58,42 +52,172 @@ const customStyles = `
 
   /* 3D tilt effect for cards */
   .tilt-card {
-    transform-style: preserve-3d; /* Enable 3D transformations for children */
-    transition: transform 0.3s ease-out; /* Smooth transition for tilt */
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease-out;
   }
 
   .tilt-card:hover {
-    transform: perspective(1000px) rotateX(5deg) rotateY(5deg); /* Tilt on hover */
+    transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
   }
 
   .tilt-card:active {
-    transform: perspective(1000px) rotateX(2deg) rotateY(2deg) scale(0.98); /* Slight press effect on click */
+    transform: perspective(1000px) rotateX(2deg) rotateY(2deg) scale(0.98);
+  }
+
+  /* Cloud Animation Styles */
+  #background-wrap {
+    bottom: 0;
+    left: 0;
+    padding-top: 50px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: -1; /* Pushes the clouds to the background */
+    pointer-events: none; /* Make sure clouds don't block interaction with the form */
+  }
+
+  /* KEYFRAMES */
+  @-webkit-keyframes animateCloud {
+    0% { margin-left: -1000px; }
+    100% { margin-left: 100%; }
+  }
+  @-moz-keyframes animateCloud {
+    0% { margin-left: -1000px; }
+    100% { margin-left: 100%; }
+  }
+  @keyframes animateCloud {
+    0% { margin-left: -1000px; }
+    100% { margin-left: 100%; }
+  }
+
+  /* ANIMATIONS */
+  .x1 {
+    -webkit-animation: animateCloud 35s linear infinite;
+    -moz-animation: animateCloud 35s linear infinite;
+    animation: animateCloud 35s linear infinite;
+    -webkit-transform: scale(0.65);
+    -moz-transform: scale(0.65);
+    transform: scale(0.65);
+  }
+  .x2 {
+    -webkit-animation: animateCloud 20s linear infinite;
+    -moz-animation: animateCloud 20s linear infinite;
+    animation: animateCloud 20s linear infinite;
+    -webkit-transform: scale(0.3);
+    -moz-transform: scale(0.3);
+    transform: scale(0.3);
+  }
+  .x3 {
+    -webkit-animation: animateCloud 30s linear infinite;
+    -moz-animation: animateCloud 30s linear infinite;
+    animation: animateCloud 30s linear infinite;
+    -webkit-transform: scale(0.5);
+    -moz-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  .x4 {
+    -webkit-animation: animateCloud 18s linear infinite;
+    -moz-animation: animateCloud 18s linear infinite;
+    animation: animateCloud 18s linear infinite;
+    -webkit-transform: scale(0.4);
+    -moz-transform: scale(0.4);
+    transform: scale(0.4);
+  }
+  .x5 {
+    -webkit-animation: animateCloud 25s linear infinite;
+    -moz-animation: animateCloud 25s linear infinite;
+    animation: animateCloud 25s linear infinite;
+    -webkit-transform: scale(0.55);
+    -moz-transform: scale(0.55);
+    transform: scale(0.55);
+  }
+
+  /* OBJECTS */
+  .cloud {
+    background: #fff;
+    background: -moz-linear-gradient(top,  #fff 5%, #f1f1f1 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(5%,#fff), color-stop(100%,#f1f1f1));
+    background: -webkit-linear-gradient(top,  #fff 5%,#f1f1f1 100%);
+    background: -o-linear-gradient(top,  #fff 5%,#f1f1f1 100%);
+    background: -ms-linear-gradient(top,  #fff 5%,#f1f1f1 100%);
+    background: linear-gradient(top,  #fff 5%,#f1f1f1 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff', endColorstr='#f1f1f1',GradientType=0 );
+    
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+    
+    -webkit-box-shadow: 0 8px 5px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 8px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 5px rgba(0, 0, 0, 0.1);
+
+    height: 120px;
+    position: relative;
+    width: 350px;
+  }
+  .cloud:after, .cloud:before {
+    background: #fff;
+    content: '';
+    position: absolute;
+    z-indeX: -1;
+  }
+  .cloud:after {
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+    height: 100px;
+    left: 50px;
+    top: -50px;
+    width: 100px;
+  }
+  .cloud:before {
+    -webkit-border-radius: 200px;
+    -moz-border-radius: 200px;
+    border-radius: 200px;
+    width: 180px;
+    height: 180px;
+    right: 50px;
+    top: -90px;
   }
 `;
 
 export default function UserAuthPage() {
-  // Animation controls for Framer Motion elements
   const controls = useAnimation();
 
-  // Effect for Framer Motion animation (runs once on component mount)
   useEffect(() => {
     controls.start({
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: 'easeOut' }, // Smooth fade-in and slide-up
+      transition: { duration: 0.8, ease: 'easeOut' },
     });
-  }, [controls]); // Dependency on controls ensures it only runs when controls object is stable
+  }, [controls]);
 
   return (
     <>
-      {/* Inject custom CSS styles */}
       <style>{customStyles}</style>
-      {/* Main container with cosmic gradient background, divided into two columns on large screens */}
-      {/* Increased overall padding to give more space around the two halves */}
-      <div className="flex flex-col h-screen w-screen lg:flex-row items-center justify-center min-h-screen cosmic-gradient-bg px-4 py-8 sm:px-6 sm:py-12">
-        {/* Left Half - Authentication Form */}
-        {/* Added h-full to make this div stretch vertically within its parent */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center h-full">
+
+      {/* Cloud animation background */}
+      <div id="background-wrap">
+        <div className="x1">
+          <div className="cloud"></div>
+        </div>
+        <div className="x2">
+          <div className="cloud"></div>
+        </div>
+        <div className="x3">
+          <div className="cloud"></div>
+        </div>
+        <div className="x4">
+          <div className="cloud"></div>
+        </div>
+        <div className="x5">
+          <div className="cloud"></div>
+        </div>
+      </div>
+
+      <div className="flex flex-col h-screen w-screen lg:flex-row items-center justify-center min-h-screen">
+        {/* Main content container with a z-index to be on top */}
+        <div className="w-full lg:w-1/2 flex items-center justify-center h-full relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={controls}
@@ -102,25 +226,17 @@ export default function UserAuthPage() {
               boxShadow: '0 15px 30px -8px rgba(0,0,0,0.5), 0 6px 12px -3px rgba(0,0,0,0.3)',
             }}
           >
-            {/* ... (existing absolute positioned glowing elements) ... */}
-
-            {/* --- ADD THIS ICON/ILLUSTRATION AREA --- */}
-            <div className="mb-6 relative z-10"> {/* Add margin-bottom */}
-              {/* You can use an SVG, an <img> tag, or an icon library component here */}
+            <div className="mb-6 relative z-10">
               <img
-                src="/images/user-auth.png" /* Replace with your SVG/PNG icon */
+                src="/images/user-auth.png"
                 alt="Authentication Icon"
-                className="h-16 w-16 mx-auto mb-2 opacity-80" /* Adjust size and opacity */
+                className="h-16 w-16 mx-auto mb-2 opacity-80"
               />
-              {/* Or use an icon from a library like Heroicons, FontAwesome etc. */}
-              {/* <LockClosedIcon className="h-16 w-16 mx-auto text-white opacity-80" /> */}
             </div>
-            {/* --- END ICON AREA --- */}
-
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-3 glitch-on-hover relative z-10">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-black mb-3 glitch-on-hover relative z-10">
               <span className="glitch-text">User Authentication</span>
             </h2>
-            <p className="text-sm sm:text-base text-gray-200 mb-6 relative z-10">
+            <p className="text-sm sm:text-base text-black mb-6 relative z-10">
               Choose an option to securely log in or create your profile.
             </p>
 
@@ -139,23 +255,6 @@ export default function UserAuthPage() {
               </Link>
             </div>
           </motion.div>
-        </div>
-
-        {/* Right Half - 3D Object Display via iframe */}
-        {/* On small screens, it takes full width and has a minimum height. On large screens, it takes half width and full screen height. */}
-        {/* Added h-full to make this div stretch vertically within its parent. Removed redundant min-h classes. */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center h-full">
-          <iframe
-            src="animations/UserAuth/index.html" // <--- IMPORTANT: Replace this with the path to your HTML file
-            title="3D Object Display"
-            className="w-full h-[82%] rounded-[2.5rem] mt-44 "
-            frameBorder="0"
-            allowFullScreen
-            sandbox="allow-scripts allow-same-origin allow-popups allow-forms" // Adjust sandbox permissions as needed
-            style={{
-              background: 'transparent', // Allow the parent's cosmic gradient to show through if iframe content is transparent
-            }}
-          ></iframe>
         </div>
       </div>
     </>

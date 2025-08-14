@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, useAnimation } from 'framer-motion';
 import Button from '../components/Button/Button.jsx';
 
+// Define color palette for consistent styling
 const colors = {
   primary: '#4A247D',
   secondary: '#6B4FA2',
@@ -23,18 +24,6 @@ const customStyles = `
 
   body {
     font-family: 'Inter', sans-serif;
-  }
-
-  @keyframes cosmicGradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  .cosmic-gradient-bg {
-    background: linear-gradient(-45deg, ${colors.primary}, ${colors.secondary}, ${colors.accent1}, ${colors.accent2});
-    background-size: 400% 400%;
-    animation: cosmicGradient 15s ease infinite;
   }
 
   @keyframes glitch {
@@ -72,6 +61,46 @@ export default function HomePage() {
   const navigate = useNavigate();
   const controls = useAnimation();
   const cardRefs = useRef([]);
+  const vantaRef = useRef(null);
+  const vantaEffect = useRef(null);
+
+  useEffect(() => {
+    if (vantaRef.current && !vantaEffect.current) {
+      const scriptThree = document.createElement('script');
+      scriptThree.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js';
+      scriptThree.onload = () => {
+        const scriptVanta = document.createElement('script');
+        scriptVanta.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js';
+        scriptVanta.onload = () => {
+          if (vantaRef.current) {
+            vantaEffect.current = window.VANTA.GLOBE({
+              el: vantaRef.current,
+              mouseControls: true,
+              touchControls: true,
+              gyroControls: false,
+              minHeight: 200.00,
+              minWidth: 200.00,
+              scale: 1.00,
+              scaleMobile: 1.00,
+              // These are the new Vanta.js configuration options from your request
+              color: 0x0,
+              color2: 0x0,
+              size: 1.10,
+              backgroundColor: 0x31bdca
+            });
+          }
+        };
+        document.body.appendChild(scriptVanta);
+      };
+      document.body.appendChild(scriptThree);
+    }
+
+    return () => {
+      if (vantaEffect.current) {
+        vantaEffect.current.destroy();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     controls.start({
@@ -122,34 +151,21 @@ export default function HomePage() {
   return (
     <>
       <style>{customStyles}</style>
-      <div className="flex flex-col md:flex-row min-h-screen cosmic-gradient-bg">
-        {/* LEFT: Animation with iframe */}
-        <div className="w-full md:w-1/2 flex items-center justify-center p-4">
-          <div className="w-full h-full overflow-hidden relative">
-            <iframe
-              src="/animations/home/index.html"
-              width="180%"
-              height="100%"
-              style={{
-                border: 'none',
-                transform: 'translateX(-25%)',
-                transition: 'transform 0.3s ease',
-              }}
-              title="Custom Animation"
-            />
-          </div>
-        </div>
 
-        {/* RIGHT: Auth Cards */}
-        <div className="w-full md:w-1/2 flex items-center justify-center p-4">
+      <div ref={vantaRef} className="fixed inset-0 z-0"></div>
+
+      <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
+        {/* Wrapper div to apply the horizontal offset */}
+        <div style={{ transform: 'translateX(-17%)' }} className="flex justify-center w-full">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={controls}
-            className="main-content-container w-full max-w-5xl bg-white/20 backdrop-blur-xl rounded-[2.5rem] p-6 sm:p-10 shadow-2xl border-2 border-white/40 relative overflow-hidden"
+            className="main-content-container w-full max-w-4xl bg-white/20 backdrop-blur-xl rounded-[2.5rem] p-12 sm:p-16 shadow-2xl border-2 border-white/40 relative overflow-hidden"
             style={{
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 10px 20px -5px rgba(0, 0, 0, 0.4)',
             }}
           >
+            {/* Your existing content */}
             <div className="absolute -top-12 -left-12 w-56 h-56 bg-accent1 rounded-full mix-blend-screen filter blur-3xl opacity-40 animate-pulse"></div>
             <div className="absolute -bottom-12 -right-12 w-56 h-56 bg-accent2 rounded-full mix-blend-screen filter blur-3xl opacity-40 animate-pulse delay-500"></div>
 

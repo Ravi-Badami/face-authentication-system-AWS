@@ -1,12 +1,10 @@
 'use client';
 import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import Webcam from 'react-webcam';
 import { toast } from 'react-hot-toast';
 import { motion, useAnimation } from 'framer-motion';
-import Button from '../components/Button/Button';
-
-// This is the Button component, now included in the same file to resolve the import error.
-
+import Button from '../components/Button/Button.jsx'; // Assuming you have a Button component
 
 // Define color palette for consistent styling
 const colors = {
@@ -72,65 +70,10 @@ const customStyles = `
   .tilt-card:active {
     transform: perspective(1000px) rotateX(2deg) rotateY(2deg) scale(0.98); /* Slight press effect on click */
   }
-
-  /* Keyframes for blob animations */
-  @keyframes blob {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    25% { transform: translate(20px, -30px) scale(1.1); }
-    50% { transform: translate(-20px, 40px) scale(0.9); }
-    75% { transform: translate(30px, -20px) scale(1.2); }
-  }
 `;
 
-// A custom, self-contained webcam component to replace the external library
-const CustomWebcam = ({ videoRef }) => {
-  const [isCameraReady, setIsCameraReady] = useState(false);
-
-  useEffect(() => {
-    const startCamera = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          setIsCameraReady(true);
-        }
-      } catch (err) {
-        console.error("Error accessing the camera: ", err);
-        toast.error("Unable to access the camera. Please check your permissions.");
-      }
-    };
-
-    startCamera();
-
-    // Cleanup function to stop the camera stream when the component unmounts
-    return () => {
-      if (videoRef.current && videoRef.current.srcObject) {
-        const tracks = videoRef.current.srcObject.getTracks();
-        tracks.forEach(track => track.stop());
-      }
-    };
-  }, [videoRef]);
-
-  return (
-    <>
-      <video
-        ref={videoRef}
-        autoPlay
-        playsInline
-        className="w-full h-auto object-cover rounded-lg"
-      />
-      {!isCameraReady && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-white font-bold text-lg rounded-lg">
-          Waiting for camera...
-        </div>
-      )}
-    </>
-  );
-};
-
-
-export default function AdminLoginPage() {
-  const videoRef = useRef(null);
+export default function UserLoginPage() {
+  const webcamRef = useRef(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const controls = useAnimation(); // Framer Motion controls
@@ -144,28 +87,16 @@ export default function AdminLoginPage() {
     });
   }, [controls]);
 
-  const captureImage = () => {
-    const video = videoRef.current;
-    if (!video) return null;
-
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    return canvas.toDataURL('image/jpeg'); // Returns a base64 string
-  };
-
   const handleLogin = async () => {
-    const imageSrc = captureImage();
+    const imageSrc = webcamRef.current.getScreenshot();
     if (!imageSrc) return toast.error('Failed to capture image.');
 
     setLoading(true);
-    const loginToast = toast.loading('Verifying admin face...');
+    const loginToast = toast.loading('Verifying your face...');
 
     try {
       const blob = await (await fetch(imageSrc)).blob();
-      const file = new File([blob], 'admin_face.jpg', { type: 'image/jpeg' });
+      const file = new File([blob], 'face.jpg', { type: 'image/jpeg' });
 
       const formData = new FormData();
       formData.append('image', file);
@@ -179,13 +110,13 @@ export default function AdminLoginPage() {
       const data = await res.json();
 
       if (res.ok) {
-        toast.success(data.message || 'Admin login successful!', { id: loginToast });
-        navigate('/admin/dashboard', { replace: true }); // Prevent back to login
+        toast.success(data.message || 'Login successful!', { id: loginToast });
+        navigate('/dashboard', { replace: true }); // Prevent back to login
       } else {
         toast.error(data.error || 'Login failed.', { id: loginToast });
       }
     } catch (err) {
-      console.error('Admin login error:', err);
+      console.error('Login error:', err);
       toast.error('An unexpected error occurred.', { id: loginToast });
     } finally {
       setLoading(false);
@@ -206,7 +137,7 @@ export default function AdminLoginPage() {
             boxShadow: '0 15px 30px -8px rgba(0,0,0,0.5), 0 6px 12px -3px rgba(0,0,0,0.3)',
           }}
         >
-          {/* Decorative glowing elements */}
+          {/* Decorative glowing elements (optional, can be added as per UserAuthPage) */}
           <div className="absolute top-0 left-0 w-24 h-24 bg-accent1 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" style={{ animationDelay: '-2s' }}></div>
           <div className="absolute top-0 right-0 w-24 h-24 bg-accent2 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" style={{ animationDelay: '-4s' }}></div>
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-secondary rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" style={{ animationDelay: '-6s' }}></div>
@@ -214,21 +145,30 @@ export default function AdminLoginPage() {
           {/* Icon/Illustration Area */}
           <div className="mb-6 relative z-10">
             <img
-              src="/images/face-auth.png"
-              alt="Admin Face Login Icon"
+              src="/images/face-auth.png" // Replace with your login specific icon/illustration
+              alt="Login Icon"
               className="h-16 w-16 mx-auto mb-2 opacity-80"
             />
           </div>
 
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-3 glitch-on-hover relative z-10">
-            <span className="glitch-text">Admin Face Login</span>
+            <span className="glitch-text">Face Login</span>
           </h2>
           <p className="text-sm sm:text-base text-gray-200 mb-6 relative z-10">
             Please align your face with the camera to log in securely.
           </p>
 
-          <div className="relative z-10 rounded-lg overflow-hidden border border-white/30 shadow-lg mb-6">
-            <CustomWebcam videoRef={videoRef} />
+          <div className="rounded-lg overflow-hidden border border-white/30 shadow-lg mb-6 relative z-10">
+            <Webcam
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              className="w-full h-auto object-cover rounded-lg"
+              videoConstraints={{
+                facingMode: 'user',
+              }}
+              mirrored={false}
+            />
+
           </div>
 
           <div className="relative z-10">
@@ -236,13 +176,13 @@ export default function AdminLoginPage() {
               onClick={handleLogin}
               text={loading ? 'Logging in...' : 'Login with Face'}
               isLoading={loading}
-              className="w-full"
+              className="w-full" // Ensure the button takes full width
             />
           </div>
 
           <p className="mt-6 text-sm text-gray-300 relative z-10">
             New here?{' '}
-            <Link to="/admin/verifyEmail" className="text-accent2 hover:underline font-semibold">
+            <Link to="/register" className="text-accent2 hover:underline font-semibold">
               Register now
             </Link>
           </p>
